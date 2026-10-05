@@ -1,14 +1,13 @@
 [package]
 name = "jio"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
-[dependencies]
-chrono = "0.4"
-uuid = { version = "1.12", features = ["v4"] }
+[lib]
+crate-type = ["lib", "dylib"]
 
-[dependencies.ori]
-git = "https:github.com/ori-ui/ori"
+[dependencies.ori-native]
+git = "https://github.com/ori-ui/ori-native"
 
-[dependencies.ori-font-awesome]
-git = "https:github.com/ori-ui/ori-font-awesome"
+[package.metadata.android]
+package = "org.jio.jio"
