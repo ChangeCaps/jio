@@ -10,8 +10,6 @@ pub enum Side {
 pub fn swipeable<T>(
     contents: impl ViewSeq<T>,
 
-    #[default = Color::TRANSPARENT] color: Color,
-
     #[default = row(())] left_view: impl View<T>,
     #[default = row(())] right_view: impl View<T>,
 
@@ -20,6 +18,7 @@ pub fn swipeable<T>(
 
     #[default = Color::RED] left_color: Color,
     #[default = Color::GREEN] right_color: Color,
+    #[default = Color::TRANSPARENT] color: Color,
 
     #[default = |_, _| ()] mut on_open: impl (FnMut(&mut T, Side) -> impl Into<Action>) + 'static,
     #[default = |_| ()] mut on_close: impl (FnMut(&mut T) -> impl Into<Action>) + 'static,
@@ -87,7 +86,7 @@ pub fn swipeable<T>(
                                 .top(0.0)
                                 .bottom(0.0)
                                 .left(0.0)
-                                .width(offset)
+                                .width(offset.round())
                                 .justify_content(Justify::Start)
                                 .background(left_color)
                                 .position(Position::Absolute)
@@ -102,7 +101,7 @@ pub fn swipeable<T>(
                                 .top(0.0)
                                 .bottom(0.0)
                                 .right(0.0)
-                                .width(-offset)
+                                .width(-offset.round())
                                 .justify_content(Justify::End)
                                 .background(right_color)
                                 .position(Position::Absolute)
@@ -142,7 +141,7 @@ pub fn swipeable<T>(
                         }
                     })
                 })
-                .on_event(move |(state, _), event| {
+                .on_event(move |(state, data), event| {
                     let left_width = if left_full {
                         state.width
                     } else {
@@ -179,21 +178,43 @@ pub fn swipeable<T>(
                             let left_threshold = left_width.min(state.width / 2.0);
                             let right_threshold = right_width.min(state.width / 2.0);
 
-                            let side = if state.offset >= left_threshold {
-                                state.offset = left_width;
-                                Some(Side::Left)
+                            let mut action = Action::rebuild();
+
+                            if state.offset >= left_threshold {
+                                let changed = state.side != Some(Side::Left);
+
+                                if state.offset == left_width
+                                    && let Some(ref mut on_open) = state.on_open
+                                    && changed
+                                {
+                                    action |= on_open(data, Side::Left);
+                                } else {
+                                    state.offset = left_width;
+                                    state.changed = changed;
+                                }
+
+                                state.side = Some(Side::Left);
                             } else if state.offset <= -right_threshold {
-                                state.offset = -right_width;
-                                Some(Side::Right)
+                                let changed = state.side != Some(Side::Right);
+
+                                if state.offset == -right_width
+                                    && let Some(ref mut on_open) = state.on_open
+                                    && changed
+                                {
+                                    action |= on_open(data, Side::Right);
+                                } else {
+                                    state.offset = -right_width;
+                                    state.changed = changed;
+                                }
+
+                                state.side = Some(Side::Right);
                             } else {
                                 state.offset = 0.0;
-                                None
+                                state.changed = state.side.is_some();
+                                state.side = None;
                             };
 
-                            state.changed |= state.side == side;
-                            state.side = side;
-
-                            Action::rebuild()
+                            action
                         }
 
                         _ => Action::new(),

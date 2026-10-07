@@ -611,7 +611,7 @@ dependencies = [
 [[package]]
 name = "ori-native"
 version = "0.1.0"
-source = "git+https://github.com/ori-ui/ori-native#4b76b396cdfd490fdf988684625457a0749d0a3b"
+source = "git+https://github.com/ori-ui/ori-native#d07e2a1766568453f629e22f0c3494c2dd2a0cf5"
 dependencies = [
  "ori",
  "ori-native-android",
@@ -625,7 +625,7 @@ dependencies = [
 [[package]]
 name = "ori-native-android"
 version = "0.1.0"
-source = "git+https://github.com/ori-ui/ori-native#4b76b396cdfd490fdf988684625457a0749d0a3b"
+source = "git+https://github.com/ori-ui/ori-native#d07e2a1766568453f629e22f0c3494c2dd2a0cf5"
 dependencies = [
  "jni",
  "ndk-sys",
@@ -639,7 +639,7 @@ dependencies = [
 [[package]]
 name = "ori-native-core"
 version = "0.1.0"
-source = "git+https://github.com/ori-ui/ori-native#4b76b396cdfd490fdf988684625457a0749d0a3b"
+source = "git+https://github.com/ori-ui/ori-native#d07e2a1766568453f629e22f0c3494c2dd2a0cf5"
 dependencies = [
  "keyboard-types",
  "ori",
@@ -651,7 +651,7 @@ dependencies = [
 [[package]]
 name = "ori-native-gtk4"
 version = "0.1.0"
-source = "git+https://github.com/ori-ui/ori-native#4b76b396cdfd490fdf988684625457a0749d0a3b"
+source = "git+https://github.com/ori-ui/ori-native#d07e2a1766568453f629e22f0c3494c2dd2a0cf5"
 dependencies = [
  "gdk4",
  "gio",
@@ -671,7 +671,7 @@ dependencies = [
 [[package]]
 name = "ori-native-macro"
 version = "0.1.0"
-source = "git+https://github.com/ori-ui/ori-native#4b76b396cdfd490fdf988684625457a0749d0a3b"
+source = "git+https://github.com/ori-ui/ori-native#d07e2a1766568453f629e22f0c3494c2dd2a0cf5"
 dependencies = [
  "proc-macro2",
  "quote",
