@@ -32,7 +32,7 @@ fn ui(_data: &Data) -> impl Effect<Data> + use<> {
             .flex(1.0))
         .justify_content(Justify::Center)
         .align_items(Align::Center)
-        .background(Color::WHITE.darken(0.1))
+        .background(Color::WHITE)
         .flex(1.0),
     )
 }

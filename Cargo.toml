@@ -11,3 +11,4 @@ git = "https://github.com/ori-ui/ori-native"
 
 [package.metadata.android]
 package = "org.jio.jio"
+targets = ["arm64-v8a", "armeabi-v7a", "x86_64"]
